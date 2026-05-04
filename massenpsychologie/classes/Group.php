@@ -23,7 +23,7 @@ class Group {
 
     public static function forProject(int $projectId): array {
         $db   = Database::get();
-        $stmt = $db->prepare('SELECT * FROM groups WHERE project_id = ?');
+        $stmt = $db->prepare('SELECT * FROM `groups` WHERE project_id = ?');
         $stmt->execute([$projectId]);
         return array_map(fn($r) => new self($r), $stmt->fetchAll());
     }
@@ -39,7 +39,7 @@ class Group {
 
     public function save(): void {
         Database::get()->prepare(
-            'UPDATE groups SET average_opinion=?, norm_extremity=?, size=?, escalated=? WHERE id=?'
+            'UPDATE `groups` SET average_opinion=?, norm_extremity=?, size=?, escalated=? WHERE id=?'
         )->execute([$this->average_opinion, $this->norm_extremity, $this->size, $this->escalated ? 1 : 0, $this->id]);
     }
 

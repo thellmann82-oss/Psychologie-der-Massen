@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="/massenpsychologie/assets/css/style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<script src="/massenpsychologie/assets/js/app.js"></script>
 </head>
 <body>
 <nav class="navbar">

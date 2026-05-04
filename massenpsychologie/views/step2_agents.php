@@ -97,9 +97,9 @@ async function loadAgents() {
   const grid = document.getElementById('agents-grid');
   grid.innerHTML = data.agents.map(a => `
     <div class="agent-card">
-      <div class="agent-name">${a.name}</div>
-      <div class="agent-type badge badge-grey">${a.personality_type}</div>
-      <div class="agent-bio">${a.bio}</div>
+      <div class="agent-name">${escHtml(a.name)}</div>
+      <div class="agent-type badge badge-grey">${escHtml(a.personality_type)}</div>
+      <div class="agent-bio">${escHtml(a.bio)}</div>
       <div class="agent-stats">
         <span title="Meinung">M: ${parseFloat(a.opinion).toFixed(2)}</span>
         <span title="Emotion">E: ${parseFloat(a.emotional_state).toFixed(2)}</span>

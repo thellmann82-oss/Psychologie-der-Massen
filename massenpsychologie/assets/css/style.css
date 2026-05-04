@@ -100,7 +100,7 @@ label small { font-size: .78rem; }
 
 /* === Timeline === */
 .timeline   { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1.5rem; }
-.tl-row     { display: flex; align-items: center; gap .5rem; gap: .75rem; }
+.tl-row     { display: flex; align-items: center; gap: .75rem; }
 .tl-round   { min-width: 70px; font-size: .8rem; color: var(--muted); }
 .tl-bar-wrap { flex: 1; height: 14px; background: #1e2235; border-radius: 4px; overflow: hidden; }
 .tl-bar     { height: 100%; border-radius: 4px; transition: width .4s; }

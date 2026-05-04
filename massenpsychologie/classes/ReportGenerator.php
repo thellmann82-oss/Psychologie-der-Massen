@@ -18,7 +18,7 @@ class ReportGenerator {
         $agents->execute([$projectId]);
         $agents = $agents->fetchAll();
 
-        $groups = $db->prepare('SELECT * FROM groups WHERE project_id = ?');
+        $groups = $db->prepare('SELECT * FROM `groups` WHERE project_id = ?');
         $groups->execute([$projectId]);
         $groups = $groups->fetchAll();
 
@@ -32,7 +32,7 @@ class ReportGenerator {
                 'SELECT al.*, a.name as agent_name, g.name as group_name
                  FROM agent_logs al
                  LEFT JOIN agents a ON al.agent_id = a.id
-                 LEFT JOIN groups g ON al.group_id = g.id
+                 LEFT JOIN `groups` g ON al.group_id = g.id
                  WHERE al.simulation_id = ?
                  ORDER BY al.round, al.id'
             );
@@ -85,15 +85,17 @@ PROMPT;
             );
         }
 
+        $escalatedCount = count($escalated);
         return <<<TEXT
 **Projekt:** {$project['name']}
 **Ereignis:** {$project['event_description']}
 **Agenten:** {$project['agent_count']} (davon {$project['anonymous_count']} anonym)
 **Simulationsrunden:** $roundCount
-**Gruppen:** {$groupSummary}
+**Gruppen:**
+$groupSummary
 **Durchschnittliche Endmeinung:** $avgOpinion
 **Eskalationsereignisse:** $escalations
-**Eskalierte Gruppen:** " . count($escalated) . "
+**Eskalierte Gruppen:** $escalatedCount
 TEXT;
     }
 }

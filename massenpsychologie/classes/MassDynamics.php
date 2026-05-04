@@ -34,7 +34,7 @@ class MassDynamics {
     }
 
     // assign_identity: Zuweisung zur nächsten Gruppe per Opinion-Nähe
-    private function assignIdentity(Agent $person, float $reaction, array &$groups): Group {
+    private function assignIdentity(Agent $person, float $reaction, array &$groups): ?Group {
         $best = null;
         $bestDist = PHP_FLOAT_MAX;
         foreach ($groups as $group) {
@@ -132,7 +132,7 @@ class MassDynamics {
             if ($group && $agent->group_id !== $group->id) {
                 // aus alter Gruppe entfernen
                 foreach ($groups as $g) {
-                    $g->members = array_filter($g->members, fn($m) => $m->id !== $agent->id);
+                    $g->members = array_values(array_filter($g->members, fn($m) => $m->id !== $agent->id));
                 }
                 $agent->group_id = $group->id;
                 $group->members[] = $agent;

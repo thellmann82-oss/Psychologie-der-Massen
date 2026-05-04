@@ -53,7 +53,7 @@ Gib ein JSON-Array zurück. Jedes Objekt hat exakt diese Felder:
 - initial_opinion: float (-1.0 bis 1.0, negativ=dagegen, positiv=dafür)
 - emotional_state: float (0.1 bis 0.9)
 - inhibition_level: float (0.1 bis 0.9, hoch=gehemmter)
-- anonymity: boolean (ca. {$project['event_description']} % anonym)
+- anonymity: boolean (ca. 40% der Agenten sollen anonym sein)
 
 Antworte nur mit dem JSON-Array, ohne Erklärungen.
 PROMPT;
