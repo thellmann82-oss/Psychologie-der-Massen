@@ -1,0 +1,11 @@
+Options -Indexes
+RewriteEngine On
+
+# API-Anfragen direkt durchleiten
+RewriteCond %{REQUEST_URI} ^/massenpsychologie/api/
+RewriteRule ^ - [L]
+
+# Alle anderen Anfragen an index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
