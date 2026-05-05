@@ -112,15 +112,23 @@ async function sendChat() {
     </div>`;
   log.scrollTop = log.scrollHeight;
 
-  const res  = await fetch(`${API}/report.php?action=chat`, {
-    method: 'POST', headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ project_id: PROJECT_ID, question })
-  });
-  const data = await res.json();
-  log.innerHTML += `
-    <div class="chat-bubble agent">
-      <strong>Analyse</strong>${escHtml(data.answer || 'Keine Antwort.')}
-    </div>`;
+  try {
+    const res  = await fetch(`${API}/report.php?action=chat`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ project_id: PROJECT_ID, question })
+    });
+    const data = await res.json();
+    const answer = data.success ? (data.answer || 'Keine Antwort.') : ('Fehler: ' + data.error);
+    log.innerHTML += `
+      <div class="chat-bubble agent">
+        <strong>Analyse</strong>${escHtml(answer)}
+      </div>`;
+  } catch(e) {
+    log.innerHTML += `
+      <div class="chat-bubble agent" style="color:var(--danger)">
+        <strong>Fehler</strong>${escHtml(e.message)}
+      </div>`;
+  }
   log.scrollTop = log.scrollHeight;
 }
 

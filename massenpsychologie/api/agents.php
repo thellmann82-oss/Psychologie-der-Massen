@@ -100,9 +100,11 @@ PROMPT;
         foreach ($groupIds as $gid) {
             $stmt = $db->prepare('SELECT AVG(opinion), COUNT(*) FROM agents WHERE group_id = ?');
             $stmt->execute([$gid]);
-            [$avg, $cnt] = $stmt->fetch(PDO::FETCH_NUM);
+            $row  = $stmt->fetch(PDO::FETCH_NUM);
+            $avg  = $row ? (float)$row[0] : 0.0;
+            $cnt  = $row ? (int)$row[1]   : 0;
             $db->prepare('UPDATE `groups` SET average_opinion=?, norm_extremity=?, size=? WHERE id=?')
-               ->execute([round($avg ?? 0, 4), round(abs($avg ?? 0), 4), $cnt, $gid]);
+               ->execute([round($avg, 4), round(abs($avg), 4), $cnt, $gid]);
         }
 
         $db->prepare('UPDATE projects SET status=?, agent_count=?, anonymous_count=? WHERE id=?')

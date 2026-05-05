@@ -39,6 +39,11 @@ try {
         $projectId = (int)($body['project_id'] ?? 0);
         $question  = trim($body['question'] ?? '');
 
+        if ($question === '') {
+            echo json_encode(['success' => false, 'error' => 'Frage darf nicht leer sein']);
+            exit;
+        }
+
         // Kontext laden
         $sim = $db->prepare('SELECT * FROM simulations WHERE project_id = ? ORDER BY id DESC LIMIT 1');
         $sim->execute([$projectId]);

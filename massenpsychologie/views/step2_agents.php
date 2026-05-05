@@ -33,7 +33,7 @@ $title = 'Schritt 2: Agenten – Massenpsychologie-Simulator';
         </button>
       </div>
     </div>
-    <div id="gen-status" class="status-msg" style="display:none"></div>
+    <div id="gen-status" class="status-msg" style="display:none"><span></span></div>
   </div>
 </div>
 
@@ -85,7 +85,7 @@ async function generateAgents() {
   btn.textContent = '⏳ Generiere…';
   msg.style.display = 'flex';
   msg.className = 'status-msg';
-  msg.lastChild.textContent = `Das LLM erstellt ${n} Agenten-Profile. Bitte warten (20–60 Sek.)…`;
+  msg.querySelector('span').textContent = `Das LLM erstellt ${n} Agenten-Profile. Bitte warten (20–60 Sek.)…`;
 
   try {
     const res  = await fetch(`${API}/agents.php?action=generate`, {
@@ -95,11 +95,11 @@ async function generateAgents() {
     const data = await res.json();
     if (!data.success) throw new Error(data.error);
     msg.className = 'status-msg success';
-    msg.lastChild.textContent = `${data.count} Agenten erfolgreich generiert!`;
+    msg.querySelector('span').textContent = `${data.count} Agenten erfolgreich generiert!`;
     loadAgents();
   } catch(e) {
     msg.className = 'status-msg error';
-    msg.lastChild.textContent = 'Fehler: ' + e.message;
+    msg.querySelector('span').textContent = 'Fehler: ' + e.message;
   } finally {
     btn.disabled = false;
     btn.textContent = '⚡ Neu generieren';
@@ -109,7 +109,7 @@ async function generateAgents() {
 async function loadAgents() {
   const res  = await fetch(`${API}/agents.php?action=list&project_id=${PROJECT_ID}`);
   const data = await res.json();
-  if (!data.success || !data.agents.length) return;
+  if (!data.success || !data.agents || !data.agents.length) return;
 
   document.getElementById('agents-section').style.display = 'block';
   document.getElementById('agent-count').textContent = data.agents.length + ' Agenten';

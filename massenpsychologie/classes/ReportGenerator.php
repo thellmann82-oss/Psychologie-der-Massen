@@ -86,10 +86,13 @@ PROMPT;
         }
 
         $escalatedCount = count($escalated);
+        $agentTotal = $project['agent_count']     ?? count($agents);
+        $agentAnon  = $project['anonymous_count'] ?? 0;
+
         return <<<TEXT
 **Projekt:** {$project['name']}
 **Ereignis:** {$project['event_description']}
-**Agenten:** {$project['agent_count']} (davon {$project['anonymous_count']} anonym)
+**Agenten:** $agentTotal (davon $agentAnon anonym)
 **Simulationsrunden:** $roundCount
 **Gruppen:**
 $groupSummary

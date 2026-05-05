@@ -111,9 +111,9 @@ async function loadResults() {
   if (!data.success || !data.simulation) return;
 
   document.getElementById('results-section').style.display = 'block';
-  renderGroups(data.groups);
-  renderGraph(data.agents, data.groups);
-  renderTimeline(data.logs, data.groups);
+  renderGroups(data.groups   || []);
+  renderGraph(data.agents    || [], data.groups || []);
+  renderTimeline(data.logs   || [], data.groups || []);
 }
 
 function renderGroups(groups) {
@@ -149,6 +149,11 @@ function renderGroups(groups) {
 }
 
 function renderTimeline(logs, groups) {
+  const tl = document.getElementById('timeline');
+  if (!logs || !logs.length) {
+    tl.innerHTML = '<p style="color:var(--text-3);font-size:.875rem;padding:.5rem 0">Noch keine Simulationsdaten vorhanden.</p>';
+    return;
+  }
   const rounds = {};
   logs.filter(l => l.action === 'opinion_update').forEach(l => {
     if (!rounds[l.round]) rounds[l.round] = [];
